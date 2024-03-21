@@ -1,0 +1,7 @@
+Flask==2.2.3
+numpy
+Flask-Cors==3.0.10
+python-dotenv==1.0.0
+google-generativeai==0.4.0
+Werkzeug==2.3.7
+pymupdf==1.23.26
