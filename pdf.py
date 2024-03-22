@@ -4,6 +4,7 @@ import fitz  # PyMuPDF
 from dotenv import load_dotenv
 import google.generativeai as genai
 from pathlib import Path
+from flask_cors import CORS
 
 load_dotenv()
 
@@ -14,7 +15,8 @@ if not GEMINI_API_KEY:
 genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel('gemini-pro-vision')
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='uploads')
+CORS(app, origins='*')
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -89,6 +91,7 @@ def process_images(folder_path):
                 image_path = os.path.join(root, file_name)
                 output = gemini_output(image_path, system_prompt, user_prompt)
                 responses.append({"image_path": image_path, "response": output})
+                print(responses)
     return responses
 
 if __name__ == '__main__':
